@@ -1,4 +1,7 @@
 <%= @name %>
+<form method="post">
+  <input type="text" name="paste">
+</form>
 <% @pastes.each do |paste| %>
   <div><%= paste.content %></div>
 <% end %>

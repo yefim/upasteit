@@ -13,4 +13,7 @@ end
 
 post '/:name' do
   @name = params[:name]
+  @p = User.first_or_create(name: @name).pastes.create(content: params[:paste])
+  content_type :json
+  @p.to_json
 end
