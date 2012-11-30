@@ -6,7 +6,12 @@ get '/' do
 end
 
 get '/:name' do |name|
-  @pastes = User.first_or_create(name: name).pastes
+  if user = User.first(name: name)
+    new = false
+  elsif user = User.create(name: name)
+    new = true
+  end
+  @pastes = if new then [] else user.pastes end
   erb :pastes
 end
 
