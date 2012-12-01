@@ -22,7 +22,7 @@ end
 post '/:name' do |name|
   @paste = User.first_or_create(name: name).pastes.create(content: params[:paste])
   respond_to do |format|
-    format.html { redirect "/#{name}" }
+    format.html { redirect "/" + name }
     format.json { @paste.to_json }
   end
 end
