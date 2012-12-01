@@ -3,7 +3,10 @@ require 'sinatra/respond_with'
 require_relative 'models'
 
 get '/' do
-  erb :index
+  respond_to do |format|
+    format.html { erb :index }
+    format.json { '{"upasteit": "wesaveit"}' }
+  end
 end
 
 get '/:name' do |name|
