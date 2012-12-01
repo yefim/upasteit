@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/respond_with'
 require_relative 'models'
 
 get '/' do
@@ -14,11 +15,17 @@ get '/:name' do |name|
   end
   # should either return json or render :pastes depending on incoming format
   erb :pastes
+  respond_to do |format|
+    format.html { erb :pastes }
+    format.json { @pastes.to_json }
+  end
 end
 
 post '/:name' do |name|
-  @p = User.first_or_create(name: name).pastes.create(content: params[:paste])
+  @paste = User.first_or_create(name: name).pastes.create(content: params[:paste])
   # should either return json or render :pastes depending on incoming format
-  content_type :json
-  @p.to_json
+  respond_to do |format|
+    format.html { redirect "/#{name}" }
+    format.json { @paste.to_json }
+  end
 end
