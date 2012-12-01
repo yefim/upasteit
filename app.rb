@@ -1,5 +1,7 @@
 require 'sinatra'
 require 'sinatra/respond_with'
+require 'json'
+require 'debugger'
 require_relative 'models'
 
 get '/' do
@@ -7,6 +9,11 @@ get '/' do
     format.html { erb :index }
     format.json { '{"upasteit": "wesaveit"}' }
   end
+end
+
+post '/' do
+  content_type :json
+  {upasteit: "wesaveit"}.to_json
 end
 
 get '/:name' do |name|
@@ -23,9 +30,14 @@ get '/:name' do |name|
 end
 
 post '/:name' do |name|
-  @paste = User.first_or_create(name: name).pastes.create(content: params[:paste])
+  pastes = User.first_or_create(name: name).pastes
+  if params[:paste].kind_of?(Array)
+    @pastes = params[:paste].map { |paste| pastes.create(content: paste) }
+  else
+    @pastes = pastes.create(content: params[:paste])
+  end
   respond_to do |format|
     format.html { redirect "/" + name }
-    format.json { @paste.to_json }
+    format.json { @pastes.to_json }
   end
 end
