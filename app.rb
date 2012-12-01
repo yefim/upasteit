@@ -12,6 +12,7 @@ get '/:name' do |name|
     User.create(name: name)
     @pastes = []
   end
+  # should either return json or render :pastes depending on incoming format
   erb :pastes
 end
 
