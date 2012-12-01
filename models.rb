@@ -17,6 +17,7 @@ class Paste
 
   property :id, Serial
   property :content, Text
+  property :created_at, DateTime
 end
 
 DataMapper.auto_upgrade!

@@ -17,9 +17,10 @@
   <body>
     <form method="post">
       <input type="text" name="paste">
+      <input type="submit">
     </form>
     <% @pastes.each do |paste| %>
-      <div><%= paste.content %></div>
+      <div><%= escape_html(paste.content) %></div>
     <% end %>
   </body>
 </html>

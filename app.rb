@@ -8,7 +8,7 @@ end
 
 get '/:name' do |name|
   if u = User.first(name: name)
-    @pastes = u.pastes
+    @pastes = u.pastes(order: [:created_at.desc])
   else
     User.create(name: name)
     @pastes = []
