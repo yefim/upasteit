@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'sinatra/respond_with'
 require 'json'
-require 'debugger'
 require_relative 'models'
 
 get '/' do
