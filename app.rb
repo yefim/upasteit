@@ -20,7 +20,7 @@ get '/:name/?:howmany?' do |name, howmany|
   if u = User.first(name: name)
     options = {}
     options[:order] = [:created_at.desc]
-    options[:limit] = Integer(howmany) if howmany
+    options[:limit] = Integer(howmany) if Integer(howmany) rescue nil
     @pastes = u.pastes(options)
   else
     User.create(name: name)
