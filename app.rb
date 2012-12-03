@@ -17,9 +17,12 @@ post '/' do
 end
 
 get '/:name/?:howmany?' do |name, howmany|
+  # single query that shit?
+  # check http://datamapper.org/docs/find.html
+  # query = 'SELECT pastes.id, content, created_at FROM pastes, users WHERE users.id = pastes.user_id AND users.name = ? ORDER BY "created_at" DESC'
+  # pastes = repository(:default).adapter.select(query, name)
   if u = User.first(name: name)
-    options = {}
-    options[:order] = [:created_at.desc]
+    options = { order: [:created_at.desc] }
     options[:limit] = Integer(howmany) if Integer(howmany) rescue nil
     @pastes = u.pastes(options)
   else
